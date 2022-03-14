@@ -79,16 +79,17 @@ class LoginControllerTest {
     }
 
     @Test
-    void loginPOST() {
-    }
-
-    @Test
-    void setUserService() {
+    void loginPOST() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/login"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("login"))
+                .andExpect(model().attribute("Title", "Login"))
+                .andDo(print());
     }
 
     @AfterEach
     void tearDown() {
-//        assertNotNull(ctx);
+        assertNotNull(ctx);
         assertNotNull(controller);
         assertNotNull(service);
         assertNotNull(mockMvc);
