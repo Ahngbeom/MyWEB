@@ -33,14 +33,14 @@ alter table user_info add column user_key blob not null;
 drop table user_info;
 
 insert into user_info(user_name, user_id, user_pw)
-values("adminstrator", "admin", aes_encrypt("1234", sha2(concat("admin", "1234"), 256)));
+values('adminstrator', 'admin', aes_encrypt('1234', sha2(concat('admin', '1234'), 256)));
 
 select * from user_info;
-select * from user_info where user_id = "admin";
+select * from user_info where user_id = 'admin';
 
 delete from user_info;
 
-select convert(aes_decrypt(user_pw, sha2(concat("admin", "1234"), 256)) using utf8), sha2(user_pw, 256) from user_info;
+select convert(aes_decrypt(user_pw, sha2(concat('admin', '1234'), 256)) using utf8), sha2(user_pw, 256) from user_info;
 
 select concat(user_id, user_pw)
 from user_info;

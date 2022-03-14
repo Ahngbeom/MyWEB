@@ -16,17 +16,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class TimeMapperTest {
 
     @Setter(onMethod_ = @Autowired)
-    private TimeMapper timeMapper;
+    private UtilMapper utilMapper;
 
     @Test
     public void testGetTime() {
-        assertNotNull(timeMapper);
-        log.info(timeMapper.getTime());
+        assertNotNull(utilMapper);
+        log.info(utilMapper.getTime());
     }
 
     @Test
     public void testGetTime2() {
-        assertNotNull(timeMapper);
-        log.info(timeMapper.getTime());
+        assertNotNull(utilMapper);
+        log.info(utilMapper.getTime());
     }
 }

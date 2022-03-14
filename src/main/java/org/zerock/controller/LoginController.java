@@ -1,5 +1,6 @@
 package org.zerock.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.zerock.domain.UserVO;
 import org.zerock.service.UserService;
 
-@Log4j2
 @Controller
+@AllArgsConstructor
+@Log4j2
 public class LoginController {
 
-    @Setter(onMethod_ = @Autowired)
+//    @Setter(onMethod_ = @Autowired)
     private UserService userService;
 
     @GetMapping("/login")

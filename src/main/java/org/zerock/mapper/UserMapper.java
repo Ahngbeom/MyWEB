@@ -1,13 +1,12 @@
 package org.zerock.mapper;
 
-import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 import org.zerock.domain.UserVO;
 
 import java.util.List;
 
-public interface TimeMapper {
-    @Select("SELECT now()")
-    String getTime();
+@Repository
+public interface UserMapper {
 
     List<UserVO> selectUserList();
     UserVO selectUser(String userId);

@@ -1,24 +1,18 @@
 package org.zerock.service;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.UserVO;
-import org.zerock.mapper.TimeMapper;
+import org.zerock.mapper.UserMapper;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
-    private TimeMapper mapper;
+    private final UserMapper mapper;
 
-    @Override
-    public String getTime() {
-        return mapper.getTime();
+    public UserServiceImpl(UserMapper mapper) {
+        this.mapper = mapper;
     }
 
     @Override

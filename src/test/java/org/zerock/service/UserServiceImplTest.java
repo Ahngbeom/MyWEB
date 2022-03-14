@@ -1,6 +1,5 @@
 package org.zerock.service;
 
-import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Log4j2
 class UserServiceImplTest {
 
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private UserServiceImpl service;
 
     @Test
@@ -30,10 +29,7 @@ class UserServiceImplTest {
     public void testGetUserList() {
         assertNotNull(service);
         log.info(service);
-        log.info(service.getTime());
-        service.registerUser(new UserVO("user", "abcde", "ahngbeom"));
         service.getUserList().forEach(user -> log.info(user));
-        log.info(service.getUser("user1").getUserPw());
     }
 
     @Test

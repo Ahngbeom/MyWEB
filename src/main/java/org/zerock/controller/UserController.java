@@ -1,5 +1,6 @@
 package org.zerock.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,17 +11,22 @@ import org.zerock.service.UserService;
 
 @Controller
 @RequestMapping(value = "/user/*")
+@AllArgsConstructor
 @Log4j2
 public class UserController {
 
     private UserService userService;
 
     @GetMapping("/info")
-    public ModelAndView info(ModelAndView mv, UserVO dto) {
-        System.out.println(dto);
-        UserVO user = userService.getUser(dto.getUserId());
-        System.out.println(user);
-        mv.addObject("user", user);
+    public ModelAndView info(ModelAndView mv, String userId) throws NullPointerException{
+        try {
+            UserVO user = userService.getUser(userId);
+            log.info(userService.getUser(userId));
+            mv.addObject("user", user);
+            mv.setViewName("user/info");
+        } catch (Exception e) {
+            log.info(e);
+        }
         return (mv);
     }
 }
