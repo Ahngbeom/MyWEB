@@ -40,6 +40,7 @@ class LoginControllerTest {
     }
 
     @InjectMocks // Mock 객체가 주입될 객체 선언. 해당 객체의 멤버 클래스와 테스트 내에 선언된 @Mock/@Spy 객체가 일치하면 주입.
+    @Autowired
     private LoginController controller;
 
     @Mock // Mock 객체 선언
@@ -60,13 +61,15 @@ class LoginControllerTest {
             // MockMvc 인스턴스에 특정 Controller를 등록. 컨트롤러에 수동으로 모의 종속성을 주입
             // 테스트할 컨트롤러를 수동으로 초기화하고 주입.
             // 단위 테스트
-///*[2]*/     mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+/*[2]*/     mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
         }
         catch (Exception e) {
             log.error(e);
         }
     }
+
+    // TDD (Test-Driven Development) 테스트 주도 개발
 
     @Test
     void loginGET() throws Exception {
@@ -76,14 +79,17 @@ class LoginControllerTest {
                 .andExpect(model().attribute("Title", "Login"))
                 .andDo(print());
 //                .andExpect(redirectedUrl("/"));
+
+        // Stub : Mock 객체를 주입하여 결과물에 대한 기댓값을 설정하는 과정 또는 메소드 (andExpect(), doReturn(), doNothing() 등)
     }
 
     @Test
     void loginPOST() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/login"))
+        mockMvc.perform(MockMvcRequestBuilders.post("/login")
+                        .param("userId", "admin"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("login"))
-                .andExpect(model().attribute("Title", "Login"))
+                .andExpect(view().name("index"))
+                .andExpect(model().attribute("Title", "Welcome to Home"))
                 .andDo(print());
     }
 

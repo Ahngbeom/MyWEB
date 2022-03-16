@@ -11,7 +11,9 @@ public interface UserService {
 
     int  registerUser(UserVO user);
 
-    int  modifyUser(UserVO user);
+    int modifyUserInfo(UserVO user, String originPw);
 
-    int  removeUser(String userId);
+    int modifyUserPassword(UserVO user, String originPw, String newPw);
+
+    int  removeUser(UserVO user, String originPw);
 }

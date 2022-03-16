@@ -40,7 +40,19 @@ select * from user_info where user_id = 'admin';
 
 delete from user_info;
 
-select convert(aes_decrypt(user_pw, sha2(concat('admin', '1234'), 256)) using utf8), sha2(user_pw, 256) from user_info;
+select *
+from user_info
+where convert(aes_decrypt(user_pw, sha2(concat('admin', '1234'), 256)) using utf8) = '1234';
+
+select *
+from user_info
+where convert(aes_decrypt(user_pw, sha2(concat('test0', '0000'), 256)) using utf8) = '0000';
+
+delete from user_info where user_id = 'test0';
+
+update user_info
+set user_name = 'tester00'
+where user_id = 'test0';
 
 select concat(user_id, user_pw)
 from user_info;

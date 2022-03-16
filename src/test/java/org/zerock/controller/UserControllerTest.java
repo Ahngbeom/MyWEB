@@ -15,8 +15,14 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.ui.ModelMap;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
+import org.zerock.domain.UserVO;
 import org.zerock.service.UserService;
+
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
@@ -47,16 +53,36 @@ class UserControllerTest {
     @BeforeEach
     void init() {
         mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+//        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
     @Test
     void userInfo() throws Exception {
-//        service.getUser("admin");
         mockMvc.perform(MockMvcRequestBuilders.get("/user/info")
                         .param("userId", "admin"))
-                .andExpect(view().name("info"))
                 .andExpect(status().isOk())
+                .andExpect(view().name("user/info"))
+                .andDo(print());
+    }
+
+    @Test
+    void userRegisterGet() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/register"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/register"))
+                .andDo(print());
+    }
+
+    @Test
+    void userRegisterPost() throws Exception {
+        MultiValueMap<String, String> userVoMap = new LinkedMultiValueMap<>();
+        userVoMap.add("userId", "RegisterTester");
+        userVoMap.add("userPw", "registertester1234");
+        userVoMap.add("userName", "RegisterTester");
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/register")
+                        .params(userVoMap))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/register"))
                 .andDo(print());
     }
 

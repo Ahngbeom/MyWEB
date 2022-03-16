@@ -1,5 +1,6 @@
 package org.zerock.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.UserVO;
 import org.zerock.mapper.UserMapper;
@@ -7,13 +8,10 @@ import org.zerock.mapper.UserMapper;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserMapper mapper;
-
-    public UserServiceImpl(UserMapper mapper) {
-        this.mapper = mapper;
-    }
 
     @Override
     public List<UserVO> getUserList() {
@@ -31,12 +29,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int modifyUser(UserVO user) {
-        return mapper.updateUser(user);
+    public int modifyUserInfo(UserVO user, String originPw) {
+        return mapper.updateUserInfo(user, originPw);
     }
 
     @Override
-    public int removeUser(String userId) {
-        return mapper.deleteUser(userId);
+    public int modifyUserPassword(UserVO user, String originPw, String newPw) {
+        return mapper.updateUserPassword(user, originPw, newPw);
+    }
+
+    @Override
+    public int removeUser(UserVO user, String originPw) {
+        return mapper.deleteUser(user, originPw);
     }
 }

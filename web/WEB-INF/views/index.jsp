@@ -28,6 +28,9 @@
 <div>
   <form method="post" action="/send">
     <label>
+      익명 <input type="checkbox">
+    </label>
+    <label>
       <textarea cols="30" rows="10"></textarea>
     </label>
 

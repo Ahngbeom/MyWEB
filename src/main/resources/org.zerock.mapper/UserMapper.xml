@@ -20,15 +20,20 @@
         values (#{userId}, aes_encrypt(#{userPw}, sha2(concat(#{userId}, #{userPw}), 256)), #{userName});
     </insert>
 
-    <update id="updateUser">
+    <update id="updateUserInfo">
         update user_info
-        set user_pw = aes_encrypt(#{userPw}, sha2(concat(#{userId}, #{userPw}), 256)),
-            user_name = #{userName}
-        where user_id = #{userId}
+        set user_name = #{user.userName}
+        where user_id = #{user.userId} and convert(aes_decrypt(user_pw, sha2(concat(#{user.userId}, #{originPw}), 256)) using utf8) = #{originPw};
+    </update>
+
+    <update id="updateUserPassword">
+        update user_info
+        set user_pw = aes_encrypt(#{newPw}, sha2(concat(#{user.userId}, #{newPw}), 256))
+        where user_id = #{user.userId} and convert(aes_decrypt(user_pw, sha2(concat(#{user.userId}, #{originPw}), 256)) using utf8) = #{originPw};
     </update>
 
     <delete id="deleteUser">
-        delete from user_info where user_id = #{userId};
+        delete from user_info where user_id = #{user.userId} and convert(aes_decrypt(user_pw, sha2(concat(#{user.userId}, #{originPw}), 256)) using utf8) = #{originPw};
     </delete>
 
 </mapper>
