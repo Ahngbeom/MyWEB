@@ -85,11 +85,22 @@ class LoginControllerTest {
 
     @Test
     void loginPOST() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/login")
-                        .param("userId", "admin"))
+        mockMvc.perform(MockMvcRequestBuilders.post("/loginProcess")
+                        .param("userId", "admin")
+                        .param("userPw", "1234"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"))
                 .andExpect(model().attribute("Title", "Welcome to Home"))
+                .andExpect(model().attribute("Content", "Welcome!"))
+                .andDo(print());
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/loginProcess")
+                        .param("userId", "admin")
+                        .param("userPw", "4321"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("login"))
+                .andExpect(model().attribute("Title", "Login"))
+                .andExpect(model().attribute("Content", "This account does not exist."))
                 .andDo(print());
     }
 

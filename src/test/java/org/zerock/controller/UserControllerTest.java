@@ -57,6 +57,14 @@ class UserControllerTest {
     }
 
     @Test
+    void userList() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/list"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/list"))
+                .andDo(print());
+    }
+
+    @Test
     void userInfo() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/user/info")
                         .param("userId", "admin"))
@@ -79,10 +87,50 @@ class UserControllerTest {
         userVoMap.add("userId", "RegisterTester");
         userVoMap.add("userPw", "registertester1234");
         userVoMap.add("userName", "RegisterTester");
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/register")
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/registerProcess")
                         .params(userVoMap))
                 .andExpect(status().isOk())
                 .andExpect(view().name("user/register"))
+                .andDo(print());
+    }
+
+    @Test
+    void userModifyGet() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/modify"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/modify"))
+                .andDo(print());
+    }
+
+    @Test
+    void userModifyPost() throws Exception {
+        MultiValueMap<String, String> userVoMap = new LinkedMultiValueMap<>();
+        userVoMap.add("userName", "RegisterTester");
+        userVoMap.add("checkPw", "registertester1234");
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/modifyProcess")
+                        .params(userVoMap))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/"))
+                .andDo(print());
+    }
+
+    @Test
+    void userRemoveGet() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/remove"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/remove"))
+                .andDo(print());
+    }
+
+    @Test
+    void userRemovePost() throws Exception {
+        MultiValueMap<String, String> userVoMap = new LinkedMultiValueMap<>();
+        userVoMap.add("userId", "test0");
+        userVoMap.add("checkPw", "0000");
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/removeProcess")
+                        .params(userVoMap))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/"))
                 .andDo(print());
     }
 
